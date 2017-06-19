@@ -138,6 +138,8 @@ public class ReadMoreTextView: UITextView {
         }
     }
     
+    public var shouldHandleReadMoreAndReadLessTap: Bool = true
+    
     /**
      Force to update trimming on the next layout pass. To update right away call `layoutIfNeeded` right after.
     */
@@ -350,6 +352,10 @@ public class ReadMoreTextView: UITextView {
     }
 
     private func pointIsInReadMoreOrReadLessTextRange(point aPoint: CGPoint) -> Bool? {
+        guard shouldHandleReadMoreAndReadLessTap else {
+            return nil
+        }
+        
         if needsTrim() && pointIsInTextRange(point: aPoint, range: readMoreTextRange(), padding: readMoreTextPadding) {
             return false
         } else if readLessText != nil && pointIsInTextRange(point: aPoint, range: readLessTextRange(), padding: readLessTextPadding) {
